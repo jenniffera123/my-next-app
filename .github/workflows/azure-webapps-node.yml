@@ -40,7 +40,6 @@ jobs:
 
       - name: Preparar carpeta de despliegue
         run: |
-          rm -rf deploy
           mkdir deploy
           cp -r .next/standalone/* deploy/
           cp -r .next/static deploy/.next/
