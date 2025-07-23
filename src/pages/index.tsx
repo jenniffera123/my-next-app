@@ -1,8 +1,10 @@
+import EnvValidator from '../components/EnvValidator';
+
 export default function Home() {
   return (
-    <div>
-      <h1>Bienvenido a mi aplicación Next.js</h1>
-      <p>Esta es la página de inicio</p>
-    </div>
+    <main>
+      <h1>Inicio</h1>
+      <EnvValidator />
+    </main>
   );
 }
