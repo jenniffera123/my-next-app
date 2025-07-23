@@ -48,6 +48,7 @@ jobs:
           cp .next/routes-manifest.json deploy/.next/
           cp .next/prerender-manifest.json deploy/.next/
           cp .next/build-manifest.json deploy/.next/
+          cp .next/react-loadable-manifest.json deploy/.next/
           cp -r public package.json next.config.js deploy/
           
       - name: Login to Azure
