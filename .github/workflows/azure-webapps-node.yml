@@ -43,7 +43,8 @@ jobs:
           mkdir deploy
           cp -r .next/standalone/* deploy/
           cp -r .next/static deploy/.next/
-          cp -r public next.config.js package.json deploy/
+          cp -r .next/build-id deploy/.next/   
+          cp -r public package.json next.config.js deploy/
           
       - name: Login to Azure
         uses: azure/login@v1
