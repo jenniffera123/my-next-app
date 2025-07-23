@@ -44,10 +44,13 @@ jobs:
           cp -r .next/standalone/* deploy/
           cp -r .next/static deploy/.next/
           cp -r public next.config.js package.json deploy/
-
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE 
+    
       - name: Desplegar a Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'prueba1266'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: ./deploy
