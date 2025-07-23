@@ -1,0 +1,54 @@
+name: Build and deploy Node.js app to Azure Web App - uaecd-th-frontend
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Instalar dependencias
+        run: npm install --legacy-peer-deps
+
+      - name: Generar archivo .env.production desde secreto
+        run: echo "NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}" > .env.production
+
+      - name: Eliminar carpeta .next antes del build
+        run: rm -rf .next
+                
+      - name: Compilar aplicación Next.js
+        run: npm run build
+        env:
+          NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
+
+      - name: Validar embebido en bundle
+        run: grep -r "$NEXT_PUBLIC_API_BASE_URL" .next/static || echo "No se encontró el valor en el bundle"
+        env:
+          NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
+
+      - name: Preparar carpeta de despliegue
+        run: |
+          rm -rf deploy
+          mkdir deploy
+          cp -r .next/standalone/* deploy/
+          cp -r .next/static deploy/.next/
+          cp -r public next.config.mjs package.json deploy/
+
+      - name: Desplegar a Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'prueba1266'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          package: ./deploy
