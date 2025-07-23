@@ -43,7 +43,7 @@ jobs:
           mkdir deploy
           cp -r .next/standalone/* deploy/
           cp -r .next/static deploy/.next/
-          cp -r public next.config.mjs package.json deploy/
+          cp -r public next.config.js package.json deploy/
 
       - name: Desplegar a Azure Web App
         uses: azure/webapps-deploy@v3
