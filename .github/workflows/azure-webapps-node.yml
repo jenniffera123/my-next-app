@@ -43,6 +43,7 @@ jobs:
           mkdir deploy
           cp -r .next/standalone/* deploy/
           cp -r .next/static deploy/.next/
+          cp -r .next/server/pages-manifest.json deploy/.next/server/
           cp -r .next/BUILD_ID deploy/.next/   
           cp .next/routes-manifest.json deploy/.next/
           cp .next/prerender-manifest.json deploy/.next/
